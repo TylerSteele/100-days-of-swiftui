@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var checkAmount = 0.0
     @State private var numberOfPeaple = 2 // Actually 4
-    @State private var tipPercentage = 20
+    @State private var tipPercentage = 20eeeo
     
     @FocusState private var amountIsFocused: Bool
     
