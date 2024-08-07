@@ -11,6 +11,7 @@ struct ContentView: View {
     @State private var usedWords = [String]()
     @State private var rootWord = ""
     @State private var newWord = ""
+    @State private var score = 0
     
     @State private var errorTitle = ""
     @State private var errorMessage = ""
@@ -18,17 +19,21 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
+
             List {
                 Section {
                     TextField("Enter your word", text: $newWord)
                         .textInputAutocapitalization(.never)
                 }
-                
+                                
                 Section {
                     ForEach(usedWords, id: \.self) { word in
                         HStack {
                             Image(systemName: "\(word.count).circle")
                             Text(word)
+                            Spacer()
+                            Image(systemName: "\(getScore(word: word)).square")
+                            Text("points!")
                         }
                     }
                 }
@@ -39,6 +44,12 @@ struct ContentView: View {
             .alert(errorTitle, isPresented: $showingError) { } message: {
                 Text(errorMessage)
             }
+            .toolbar {
+                Text("Total Score: \(score)")
+                Button("Restart") {
+                    startGame()
+                }
+            }
         }
     }
     
@@ -48,6 +59,17 @@ struct ContentView: View {
         guard answer.count > 0 else { 
             handleWordError(title: "No letters in word", message: "Type something!")
             return }
+        
+        guard answer.count > 2 else {
+            handleWordError(title: "That word is too short", message: "Enter words with three letters or more")
+            return
+            
+        }
+        
+        guard answer != rootWord else {
+            handleWordError(title: "That's just the entire word...", message: "Come up with a new word!")
+            return
+        }
         
         guard isOriginal(word: answer) else {
             handleWordError(title: "Word used already", message: "Be more original")
@@ -65,9 +87,14 @@ struct ContentView: View {
         }
         
         withAnimation {
+            score += getScore(word: answer)
             usedWords.insert(answer, at: 0)
         }
         newWord = ""
+    }
+    
+    private func getScore(word: String) -> Int {
+        Int(pow(Double(word.count), 1.5))
     }
     
     private func isOriginal(word: String) -> Bool {
@@ -105,6 +132,8 @@ struct ContentView: View {
             if let startWords = try? String(contentsOf: startWordsURL) {
                 let allWords = startWords.components(separatedBy: "\n")
                 rootWord = allWords.randomElement() ?? "outsider"
+                usedWords = []
+                score = 0
                 
                 return
             }
