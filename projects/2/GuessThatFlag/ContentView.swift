@@ -24,7 +24,12 @@ struct ContentView: View {
     @State private var correct = false
     @State private var alertMessage = ""
     @State private var gameOver = false
+    private let choicesRange: Range<Int> = 0..<3
+    @State private var buttonAnimationRotateAmounts = [0.0, 0.0, 0.0]
+    @State private var buttonAnimationOpacityAmounts = [1.0, 1.0, 1.0]
+    @State private var buttonAnimationScaleAmounts = [1.0, 1.0, 1.0]
     private let numberOfQuestionsPerQuiz = 8
+    
     @State private var currentQuestion = 1 {
         didSet {
             if (currentQuestion > numberOfQuestionsPerQuiz) {
@@ -55,12 +60,22 @@ struct ContentView: View {
                     }
                     .padding()
                     
-                    ForEach(0..<3) { number in
+                    ForEach(choicesRange, id: \.self) { number in
                         Button {
                             flagTapped(number)
+
                         } label: {
                             FlagImage(flagName: countries[number])
                         }
+                        .scaleEffect(buttonAnimationScaleAmounts[number])
+                        .animation(.easeInOut(duration: 1),
+                                   value: buttonAnimationScaleAmounts[number])
+                        .rotation3DEffect(
+                            .degrees(buttonAnimationRotateAmounts[number]),
+                            axis: (x: 0, y: 1, z: 0)
+                        )
+                        .opacity(buttonAnimationOpacityAmounts[number])
+                        
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -85,11 +100,20 @@ struct ContentView: View {
             Button("Continue", action: askQuestion)
         } message: {
             Text(alertMessage)
-                
         }
-            }
+    }
     
     func flagTapped(_ number: Int) {
+        
+        withAnimation {
+            buttonAnimationRotateAmounts[number] += 360.0
+            buttonAnimationScaleAmounts[correctAnswer] += 0.25
+            for flagNumber in choicesRange {
+                if flagNumber != number {
+                    buttonAnimationOpacityAmounts[flagNumber] -= 0.75
+                }
+            }
+        }
         currentQuestion += 1
         if number == correctAnswer {
             correct = true
@@ -103,6 +127,8 @@ struct ContentView: View {
     }
     
     func askQuestion() {
+        buttonAnimationOpacityAmounts = [1.0, 1.0, 1.0]
+        buttonAnimationScaleAmounts = [1.0, 1.0, 1.0]
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
     }
