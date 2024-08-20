@@ -28,61 +28,27 @@ struct MissionView: View {
                     .padding(.bottom, 20)
                
                 VStack(alignment: .leading) {
-                    Rectangle()
-                        .frame(height: 2)
-                        .foregroundStyle(.lightBackground)
-                        .padding(.vertical)
+                    HorizontalBar()
                     Text("Mission Highlights")
                         .font(.title.bold())
                         .padding(.bottom, 7)
                     
+                    HStack {
+                        Text("Launch Date: ")
+                            .font(.subheadline.bold())
+                        Text(mission.formattedLaunchDate)
+                    }
+                    .padding(.bottom, 10)
                     Text(mission.description)
                     
-                    Rectangle()
-                        .frame(height: 2)
-                        .foregroundStyle(.lightBackground)
-                        .padding(.vertical)
+                    HorizontalBar()
                     Text("Crew")
                         .font(.title.bold())
                         .padding(.bottom, 7)
                 }
                 .padding(.horizontal)
                 
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach(crew, id: \.role) { crewMember in
-                            NavigationLink {
-                                AstronautView(astronaut: crewMember.astronaut)
-                            } label: {
-                                HStack {
-                                    UnevenRoundedRectangle(cornerRadii: .init(topLeading: 50, bottomLeading: 50))
-                                        .fill(.red.opacity(0.7))
-                                        .strokeBorder(.white, lineWidth: 2)
-                                        .frame(width: 106, height: 74)
-                                        
-                                        .overlay(
-                                            Image(crewMember.astronaut.id)
-                                                .resizable()
-                                                .frame(width: 104, height: 72)
-                                                .clipShape(.capsule)
-                                                
-                                            )
-                                        
-                                    
-                                    VStack(alignment: .leading) {
-                                        Text(crewMember.astronaut.name)
-                                            .foregroundStyle(.white)
-                                            .font(.headline)
-                                        
-                                        Text(crewMember.role)
-                                            .foregroundStyle(.white.opacity(0.5))
-                                    }
-                                }
-                                .padding(.horizontal)
-                            }
-                        }
-                    }
-                }
+                CrewList(crew: crew)
             }
             .padding(.bottom)
         }
