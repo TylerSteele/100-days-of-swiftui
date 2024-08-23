@@ -45,17 +45,18 @@ struct DetailView: View {
     
     var body: some View {
         NavigationLink("Go to random number", value: Int.random(in: 1...1000))
-            .navigationTitle("Number \(number)")
-            .toolbar {
-                Button("Home") {
-                    path = NavigationPath()
-                }
+        .toolbar {
+            Button("Home") {
+                path = NavigationPath()
             }
+        }
+        
+           
     }
 }
 
 
-struct ContentView: View {
+struct NavigationExampleContentView: View {
     @State private var pathStore = PathStore()
     var body: some View {
         NavigationStack(path: $pathStore.path) {
@@ -66,6 +67,51 @@ struct ContentView: View {
             .navigationDestination(for: Int.self) { selection in
                 DetailView(path: $pathStore.path, number: selection)
             }
+        }
+    }
+}
+
+struct ToolBarCustomizationExampleContentView: View {
+    
+    var body: some View {
+        NavigationStack {
+            List(0..<100) { i in
+                Text("Row \(i)")
+            }
+            .navigationTitle("Title goes here")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.blue)
+            .toolbarColorScheme(.dark)
+            .toolbar(.hidden, for: .navigationBar)
+        }
+    }
+}
+
+struct ButtonPlacementExampleContentView: View {
+    var body: some View {
+        NavigationStack {
+            Text("Hello, world")
+                .toolbar {
+                    ToolbarItemGroup(placement: .confirmationAction) {
+                        Button("Tap Me") {}
+                        Button("Tap Me Too!") {}
+                    }
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Or tap Me") {}
+                    }
+                }
+                .navigationBarBackButtonHidden()
+        }
+    }
+}
+
+struct ContentView: View {
+    @State private var title = "SwiftUI"
+    var body: some View {
+        NavigationStack {
+            Text("Hello, world")
+                .navigationTitle($title)
+                .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
