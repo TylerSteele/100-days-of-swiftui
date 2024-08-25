@@ -12,14 +12,13 @@ struct MissionsGrid: View {
     let astronauts: [String: Astronaut]
     let columns = [
         GridItem(.adaptive(minimum: 150))
-    
     ]
+    
+    
     var body: some View {
         LazyVGrid(columns: columns) {
             ForEach(missions) { mission in
-                NavigationLink {
-                    MissionView(mission: mission, astronauts: astronauts)
-                } label: {
+                NavigationLink(value: mission) {
                     VStack {
                         Image(mission.image)
                             .resizable()

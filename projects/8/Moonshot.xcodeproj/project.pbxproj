@@ -13,6 +13,7 @@
 		10109A5C2C74CA9900938659 /* HorizontalBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10109A5B2C74CA9900938659 /* HorizontalBar.swift */; };
 		10109A5E2C74CD2C00938659 /* MissionsGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10109A5D2C74CD2C00938659 /* MissionsGrid.swift */; };
 		10109A602C74CD9200938659 /* MissionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10109A5F2C74CD9200938659 /* MissionsList.swift */; };
+		1022567D2C7AC49D00630375 /* PathStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1022567C2C7AC49D00630375 /* PathStore.swift */; };
 		103D46F72C6F830500697AF6 /* MoonshotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D46F62C6F830500697AF6 /* MoonshotApp.swift */; };
 		103D46F92C6F830500697AF6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D46F82C6F830500697AF6 /* ContentView.swift */; };
 		103D46FB2C6F830700697AF6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 103D46FA2C6F830700697AF6 /* Assets.xcassets */; };
@@ -32,6 +33,7 @@
 		10109A5B2C74CA9900938659 /* HorizontalBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalBar.swift; sourceTree = "<group>"; };
 		10109A5D2C74CD2C00938659 /* MissionsGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionsGrid.swift; sourceTree = "<group>"; };
 		10109A5F2C74CD9200938659 /* MissionsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionsList.swift; sourceTree = "<group>"; };
+		1022567C2C7AC49D00630375 /* PathStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathStore.swift; sourceTree = "<group>"; };
 		103D46F32C6F830500697AF6 /* Moonshot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moonshot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		103D46F62C6F830500697AF6 /* MoonshotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonshotApp.swift; sourceTree = "<group>"; };
 		103D46F82C6F830500697AF6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 		103D46EA2C6F830500697AF6 = {
 			isa = PBXGroup;
 			children = (
+				1022567C2C7AC49D00630375 /* PathStore.swift */,
 				10109A5F2C74CD9200938659 /* MissionsList.swift */,
 				10109A5D2C74CD2C00938659 /* MissionsGrid.swift */,
 				10109A5B2C74CA9900938659 /* HorizontalBar.swift */,
@@ -185,6 +188,7 @@
 				103D46F72C6F830500697AF6 /* MoonshotApp.swift in Sources */,
 				103D470D2C72F0D600697AF6 /* bundle-decodable.swift in Sources */,
 				10109A5C2C74CA9900938659 /* HorizontalBar.swift in Sources */,
+				1022567D2C7AC49D00630375 /* PathStore.swift in Sources */,
 				103D470F2C72F47600697AF6 /* mission.swift in Sources */,
 				103D47112C72FBB700697AF6 /* color-theme.swift in Sources */,
 			);

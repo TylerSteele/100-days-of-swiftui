@@ -13,9 +13,7 @@ struct CrewList: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(crew, id: \.role) { crewMember in
-                    NavigationLink {
-                        AstronautView(astronaut: crewMember.astronaut)
-                    } label: {
+                    NavigationLink(value: crewMember.astronaut) {
                         HStack {
                             UnevenRoundedRectangle(cornerRadii: .init(topLeading: 50, bottomLeading: 50))
                                 .fill(.red.opacity(0.7))

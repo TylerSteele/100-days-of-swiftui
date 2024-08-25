@@ -10,7 +10,7 @@ import SwiftUI
 struct AddView: View {
     var expenses: Expenses
     
-    @State private var name = ""
+    @State private var name = "New Expense"
     @State private var type = "Personal"
     @State private var amount = 0.0
     
@@ -21,8 +21,6 @@ struct AddView: View {
     var body: some View {
         NavigationStack {
             Form {
-                TextField("Name", text: $name)
-                
                 Picker("Type", selection: $type) {
                     ForEach(types, id: \.self) {
                         Text($0)
@@ -32,7 +30,6 @@ struct AddView: View {
                 TextField("Amount", value: $amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                     .keyboardType(.decimalPad)
             }
-            .navigationTitle("Add new expense")
             .toolbar {
                 Button("Save") {
                     let item = ExpenseItem(name: name, type: type, amount: amount)
@@ -41,7 +38,12 @@ struct AddView: View {
                 }
             }
         }
+        .navigationBarBackButtonHidden()
+        .navigationTitle($name)
+        .navigationBarTitleDisplayMode(.inline)
     }
+    
+    
 }
 
 #Preview {
