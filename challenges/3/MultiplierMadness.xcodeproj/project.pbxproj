@@ -11,6 +11,8 @@
 		10C3F7F12C6D9ABA00587768 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C3F7F02C6D9ABA00587768 /* ContentView.swift */; };
 		10C3F7F32C6D9ABB00587768 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10C3F7F22C6D9ABB00587768 /* Assets.xcassets */; };
 		10C3F7F62C6D9ABB00587768 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10C3F7F52C6D9ABB00587768 /* Preview Assets.xcassets */; };
+		10C3F7FD2C6EDD7100587768 /* QuizSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C3F7FC2C6EDD7100587768 /* QuizSetup.swift */; };
+		10C3F7FF2C6EDDB200587768 /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C3F7FE2C6EDDB200587768 /* Quiz.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		10C3F7F02C6D9ABA00587768 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		10C3F7F22C6D9ABB00587768 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		10C3F7F52C6D9ABB00587768 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		10C3F7FC2C6EDD7100587768 /* QuizSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSetup.swift; sourceTree = "<group>"; };
+		10C3F7FE2C6EDDB200587768 /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 			children = (
 				10C3F7EE2C6D9ABA00587768 /* MultiplierMadnessApp.swift */,
 				10C3F7F02C6D9ABA00587768 /* ContentView.swift */,
+				10C3F7FE2C6EDDB200587768 /* Quiz.swift */,
+				10C3F7FC2C6EDD7100587768 /* QuizSetup.swift */,
 				10C3F7F22C6D9ABB00587768 /* Assets.xcassets */,
 				10C3F7F42C6D9ABB00587768 /* Preview Content */,
 			);
@@ -139,6 +145,8 @@
 			files = (
 				10C3F7F12C6D9ABA00587768 /* ContentView.swift in Sources */,
 				10C3F7EF2C6D9ABA00587768 /* MultiplierMadnessApp.swift in Sources */,
+				10C3F7FF2C6EDDB200587768 /* Quiz.swift in Sources */,
+				10C3F7FD2C6EDD7100587768 /* QuizSetup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
