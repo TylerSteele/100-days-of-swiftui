@@ -34,6 +34,14 @@ struct DetailView: View {
                 .font(.title)
                 .foregroundStyle(.secondary)
             
+            HStack {
+                Text("Date added:")
+                Text(book.date, style: .date)
+            }
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            
+            
             Text(book.review)
                 .padding()
             

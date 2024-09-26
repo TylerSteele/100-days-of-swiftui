@@ -44,10 +44,19 @@ struct AddBookView: View {
                         modelContext.insert(newBook)
                         dismiss()
                     }
+                    .disabled(invalidBook)
                 }
             }
             .navigationTitle("Add Book")
         }
+    }
+    
+    var invalidBook: Bool {
+        isInvalid(title) || isInvalid(author) || isInvalid(genre)
+    }
+    
+    func isInvalid(_ stringToTest: String) -> Bool {
+        stringToTest.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 }
 
