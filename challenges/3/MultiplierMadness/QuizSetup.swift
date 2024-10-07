@@ -40,7 +40,13 @@ struct QuizSetup: View {
                             let number = row * 3 + column + 1
                             Button("\(number)") {
                                 withAnimation {
-                                    multiplicationTables.append(number)
+                                    if (multiplicationTables.contains(number)) {
+                                        multiplicationTables.removeAll {$0 == number}
+                                    } else {
+                                        multiplicationTables.append(number)
+                                        
+                                    }
+                                    
                                 }
                             }
                             .padding(EdgeInsets(top: 20, leading: 30, bottom: 20,  trailing: 30))
@@ -66,20 +72,34 @@ struct QuizSetup: View {
                         startQuiz = true
                     }
                     .padding(EdgeInsets(top: 20, leading: 30, bottom: 20,  trailing: 30))
-                    .foregroundStyle(.white)
-                    .fontWeight(.bold)
-                    .font(.largeTitle)
-                    .background(RadialGradient(colors: [.blue, .green, .purple], center: .bottomLeading, startRadius: 0, endRadius: 100))
-                    .fixedSize()
-                    .clipShape(.rect(cornerRadius: 30))
-                    .shadow(color: .teal, radius: 8, x: 3, y: 2)
+                    .themedButtonStyle()
+                    
                 }
             }
             .padding()
         }
         .sheet(isPresented: $startQuiz) {
-            Quiz(startQuiz: $startQuiz, numberOfQuestions: numberOfQuestions, multiplicationTables: multiplicationTables)
+            Quiz(startQuiz: $startQuiz, numberOfQuestions: Int(numberOfQuestions), multiplicationTables: multiplicationTables)
         }
         .preferredColorScheme(.dark)
+    }
+}
+
+struct ThemedButton: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundStyle(.white)
+            .fontWeight(.bold)
+            .font(.largeTitle)
+            .background(RadialGradient(colors: [.blue, .green, .purple], center: .bottomLeading, startRadius: 0, endRadius: 100))
+            .fixedSize()
+            .clipShape(.rect(cornerRadius: 30))
+            .shadow(color: .teal, radius: 8, x: 3, y: 2)
+    }
+}
+
+extension View {
+    func themedButtonStyle() -> some View {
+        modifier(ThemedButton())
     }
 }
