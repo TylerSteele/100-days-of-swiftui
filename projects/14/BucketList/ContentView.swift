@@ -15,29 +15,42 @@ struct ContentView: View {
     
     var body: some View {
         if viewModel.isUnlocked {
-            MapReader { proxy in
-                Map(initialPosition: startPosition) {
-                    ForEach(viewModel.locations) { location in
-                        Annotation(location.name, coordinate: location.coordinate) {
-                            Image(systemName: "star.circle")
-                                .resizable()
-                                .foregroundStyle(.purple)
-                                .frame(width: 44, height: 44)
-                                .background(.white)
-                                .clipShape(.circle)
-                                .simultaneousGesture(LongPressGesture(minimumDuration: 1).onEnded { _ in viewModel.selectedPlace = location })
+            VStack {
+                MapReader { proxy in
+                    Map(initialPosition: startPosition) {
+                        ForEach(viewModel.locations) { location in
+                            Annotation(location.name, coordinate: location.coordinate) {
+                                Image(systemName: "star.circle")
+                                    .resizable()
+                                    .foregroundStyle(.purple)
+                                    .frame(width: 44, height: 44)
+                                    .background(.white)
+                                    .clipShape(.circle)
+                                    .simultaneousGesture(LongPressGesture(minimumDuration: 1).onEnded { _ in viewModel.selectedPlace = location })
+                            }
                         }
                     }
-                }
-                .onTapGesture { position in
-                    if let coordinate = proxy.convert(position, from: .local) {
-                        viewModel.addLocation(at: coordinate)
+                    .mapStyle(viewModel.selectedMapStyle)
+                    .onTapGesture { position in
+                        if let coordinate = proxy.convert(position, from: .local) {
+                            viewModel.addLocation(at: coordinate)
+                        }
                     }
-                }
-                .sheet(item: $viewModel.selectedPlace) { place in
-                    EditView(location: place) {
-                        viewModel.update(location: $0)
+                    .sheet(item: $viewModel.selectedPlace) { place in
+                        EditView(location: place) {
+                            viewModel.update(location: $0)
+                        }
                     }
+                    HStack {
+                        Text("Map style:")
+                        Picker("Map style", selection: $viewModel.selectedMapStyleString) {
+                            ForEach(viewModel.mapStyleOptions, id: \.self) {
+                                Text("\($0)")
+                            }
+                        }
+                    }
+                    
+                    
                 }
             }
         } else {
@@ -46,6 +59,12 @@ struct ContentView: View {
                 .background(.green)
                 .foregroundStyle(.white)
                 .clipShape(.buttonBorder)
+                .alert("Error authenticating", isPresented: $viewModel.failedAuth) {
+                    Button("Okay", action: viewModel.clearAuthError)
+                }
+            message: {
+                Text(viewModel.authError ?? "Please try again.")
+            }
         }
     }
 }

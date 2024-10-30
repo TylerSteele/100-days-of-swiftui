@@ -8,6 +8,11 @@
 import Foundation
 import LocalAuthentication
 import MapKit
+import _MapKit_SwiftUI
+
+enum MapStyleOptions {
+    case hybrid, standard
+}
 
 
 extension ContentView {
@@ -16,6 +21,21 @@ extension ContentView {
         private(set) var locations: [Location]
         var selectedPlace: Location?
         var isUnlocked = false
+        var failedAuth = false
+        private(set) var authError: String?
+                
+        let mapStyleOptions: [MapStyleOptions] = [ .standard, .hybrid]
+        var selectedMapStyleString: MapStyleOptions
+        var selectedMapStyle: MapStyle {
+            switch selectedMapStyleString {
+            case MapStyleOptions.standard:
+                return MapStyle.standard
+            case MapStyleOptions.hybrid:
+                return MapStyle.hybrid
+            }
+            
+        }
+
         
         let savePath = URL.documentsDirectory.appending(path: "SavedPlaces")
         
@@ -26,6 +46,7 @@ extension ContentView {
             } catch {
                 locations = []
             }
+            selectedMapStyleString = mapStyleOptions[0]
         }
         
         func save() {
@@ -54,20 +75,30 @@ extension ContentView {
         func authenticate() {
             let context = LAContext()
             var error: NSError?
+            print("Auth")
             
             if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
                 let reason = "Please authenticate yourself to unlock your locations."
                 
                 context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
                     if success {
+                        print("SUCCESS")
                         self.isUnlocked = true
                     } else {
-                        // error
+                        print("ERROR")
+                        self.failedAuth = true
+                        self.authError = authenticationError?.localizedDescription
                     }
                 }
             } else {
+                print("INCOMPATIBLE")
                 // no biometrics
             }
+        }
+        
+        func clearAuthError() {
+            self.failedAuth = false
+            self.authError = ""
         }
     }
     
