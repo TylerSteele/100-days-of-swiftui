@@ -35,6 +35,8 @@ struct ContentView: View {
                             Image(systemName: "\(getScore(word: word)).square")
                             Text("points!")
                         }
+                        .accessibilityElement()
+                        .accessibilityLabel("\(word), \(word.count) letters, \(getScore(word: word)) points")
                     }
                 }
             }
