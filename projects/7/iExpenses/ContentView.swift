@@ -37,6 +37,9 @@ struct ExpensesList: View {
                             .foregroundStyle(expense.amount < 10.0 ? .black : .white)
                             .fontWeight(expense.amount < 10.0 ? .medium : .bold)
                     }
+                    .accessibilityElement()
+                    .accessibilityValue("\(expense.name) \(expense.amount)")
+                    .accessibilityHint(expense.type)
                 }
                 .onDelete(perform: removeItems)
             }

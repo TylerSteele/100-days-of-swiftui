@@ -27,6 +27,7 @@ struct CrewList: View {
                                         .clipShape(.capsule)
                                     
                                 )
+                                .accessibilityHidden(true)
                             
                             
                             VStack(alignment: .leading) {
@@ -37,6 +38,8 @@ struct CrewList: View {
                                 Text(crewMember.role)
                                     .foregroundStyle(.white.opacity(0.5))
                             }
+                            .accessibilityElement()
+                            .accessibilityLabel("\(crewMember.astronaut.name), \(crewMember.role)")
                         }
                         .padding(.horizontal)
                     }
@@ -55,7 +58,7 @@ struct CrewList: View {
         }
         fatalError("Missing astronaut data for \(member.name).")
     }
-
+    
     return CrewList(crew: crew)
         .preferredColorScheme(.dark)
 }

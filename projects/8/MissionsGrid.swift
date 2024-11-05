@@ -25,6 +25,7 @@ struct MissionsGrid: View {
                             .scaledToFit()
                             .frame(width: 100, height: 100)
                             .padding()
+                            .accessibilityHidden(true)
                         VStack {
                             Text(mission.displayName)
                                 .font(.headline)
@@ -38,6 +39,8 @@ struct MissionsGrid: View {
                         .padding(.vertical)
                         .frame(maxWidth: .infinity)
                         .background(.lightBackground)
+                        .accessibilityElement()
+                        .accessibilityLabel("\(mission.displayName) \(mission.formattedLaunchDate)")
                     }
                     .clipShape(.rect(cornerRadius: 10))
                     .overlay(

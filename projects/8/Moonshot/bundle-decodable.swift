@@ -37,3 +37,16 @@ extension Bundle {
         }
     }
 }
+
+extension FileManager {
+    func loadDocument(_ file: String) -> String? {
+        let url = URL.documentsDirectory.appending(path: file)
+        do {
+            let output = try String(contentsOf: url)
+            return output
+        } catch {
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+}
