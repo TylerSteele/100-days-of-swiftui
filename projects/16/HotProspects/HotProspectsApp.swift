@@ -10,10 +10,19 @@ import SwiftUI
 
 @main
 struct HotProspectsApp: App {
+    let container: ModelContainer
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: Prospect.self)
+        .modelContainer(container)
+    }
+    
+    init() {
+        do {
+            container = try ModelContainer(for: Prospect.self, migrationPlan: ProspectsMigrationPlan.self)
+        } catch {
+            fatalError("Failed to initialize model container")
+        }
     }
 }
