@@ -34,7 +34,7 @@ struct ProspectsView: View {
                                 Text("Sort by Name")
                                     .tag([SortDescriptor(\Prospect.name)])
                                 Text("Sort by Most Recent")
-                                    .tag([ SortDescriptor(\Prospect.dateAdded)])
+                                    .tag([ SortDescriptor(\Prospect.dateAdded, order: .reverse)])
                             }
                         }
                     }
