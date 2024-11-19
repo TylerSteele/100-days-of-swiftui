@@ -16,7 +16,9 @@ extension View {
 
 struct ContentView: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) var accessibilityDifferentiateWithoutColor
-    @State private var cards = Array<Card>(repeating: .example, count: 10)
+    @Environment(\.accessibilityVoiceOverEnabled) var accessibilityVoiceOverEnabled
+    @State private var cards = [Card]()
+    @State private var showEditing = false
     @State private var timeRemaining = 100
     
     @Environment(\.scenePhase) var scenePhase
@@ -29,7 +31,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            Image(.background)
+            Image(decorative: "background")
                 .resizable()
                 .ignoresSafeArea()
             VStack {
@@ -47,7 +49,9 @@ struct ContentView: View {
                                 removeCard(at: index)
                             }
                         }
-                            .stacked(at: index, in: cards.count)
+                        .stacked(at: index, in: cards.count)
+                        .allowsHitTesting(index == cards.count - 1)
+                        .accessibilityHidden(index < cards.count - 1)
                     }
                 }
                 .allowsHitTesting(timeRemaining > 0)
@@ -60,22 +64,60 @@ struct ContentView: View {
                         .clipShape(.capsule)
                 }
             }
-            if accessibilityDifferentiateWithoutColor {
+            
+            VStack {
+                HStack {
+                    Spacer()
+                    
+                    Button {
+                        showEditing = true
+                    } label: {
+                        Image(systemName: "plus.circle")
+                            .padding()
+                            .background(.black.opacity(0.7))
+                            .clipShape(.circle)
+                        
+                    }
+                }
+                Spacer()
+            }
+            .foregroundStyle(.white)
+            .font(.largeTitle)
+            .padding()
+            
+            if accessibilityDifferentiateWithoutColor || accessibilityVoiceOverEnabled {
                 VStack {
                     Spacer()
                     
                     HStack {
-                        Image(systemName: "xmark.circle")
-                            .padding()
-                            .background(.black.opacity(0.7))
-                            .clipShape(.circle)
+                        Button {
+                            withAnimation {
+                                removeCard(at: cards.count - 1)
+                            }
+                        } label: {
+                            Image(systemName: "xmark.circle")
+                                .padding()
+                                .background(.black.opacity(0.7))
+                                .clipShape(.circle)
+                        }
+                        .accessibilityLabel("Wrong")
+                        .accessibilityHint("Mark your answer as being incorrect.")
+                        
                         
                         Spacer()
                         
-                        Image(systemName: "checkmark.circle")
-                            .padding()
-                            .background(.black.opacity(0.7))
-                            .clipShape(.circle)
+                        Button {
+                            withAnimation {
+                                removeCard(at: cards.count - 1)
+                            }
+                        } label: {
+                            Image(systemName: "checkmark.circle")
+                                .padding()
+                                .background(.black.opacity(0.7))
+                                .clipShape(.circle)
+                        }
+                        .accessibilityLabel("Correct")
+                        .accessibilityHint("Mark your answer as being correct.")
                     }
                     .foregroundStyle(.white)
                     .font(.largeTitle)
@@ -89,16 +131,27 @@ struct ContentView: View {
                 timeRemaining -= 1
             }
         }
+        .sheet(isPresented: $showEditing, onDismiss: resetCards, content: EditCards.init)
     }
     
     func removeCard(at index: Int) {
+        guard index >= 0 else { return }
         cards.remove(at: index)
     }
     
     func resetCards() {
-        cards = Array<Card>(repeating: .example, count: 10)
         timeRemaining = 100
+        loadData()
     }
+    
+    func loadData() {
+        if let data = UserDefaults.standard.data(forKey: "Cards") {
+            if let decoded = try? JSONDecoder().decode([Card].self, from: data) {
+                cards = decoded
+            }
+        }
+    }
+    
 }
 
 #Preview {
