@@ -15,6 +15,7 @@ struct CardView: View {
     
     let card: Card
     var removal: (() -> Void)? = nil
+    var tryAgain: (() -> Void)? = nil
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 25)
@@ -27,7 +28,7 @@ struct CardView: View {
                     accessibilityDifferentiateWithoutColor ?
                     nil :
                         RoundedRectangle(cornerRadius: 24)
-                        .fill(offset.width > 0 ? .green : .red)
+                        .colorCorrectIncorrect(at: offset)
                 )
                 .shadow(radius: 10)
             
@@ -63,8 +64,14 @@ struct CardView: View {
                 }
                 .onEnded {
                     _ in
-                    if abs(offset.width) > 100 {
+                    if offset.width > 100 {
                         removal?()
+                    } else if offset.width < -100 {
+                        if tryAgain != nil {
+                            tryAgain!()
+                        } else {
+                            removal?()
+                        }
                     } else {
                         offset = .zero
                     }
