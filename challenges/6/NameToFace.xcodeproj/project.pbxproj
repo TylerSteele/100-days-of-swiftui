@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		106DDA402CEEAC6900477B7C /* LocationFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106DDA3F2CEEAC6900477B7C /* LocationFetcher.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		106DD9E72CEE810100477B7C /* NameToFace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NameToFace.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		106DDA3F2CEEAC6900477B7C /* LocationFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationFetcher.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +37,7 @@
 		106DD9DE2CEE810100477B7C = {
 			isa = PBXGroup;
 			children = (
+				106DDA3F2CEEAC6900477B7C /* LocationFetcher.swift */,
 				106DD9E92CEE810100477B7C /* NameToFace */,
 				106DD9E82CEE810100477B7C /* Products */,
 			);
@@ -119,6 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				106DDA402CEEAC6900477B7C /* LocationFetcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +262,7 @@
 				DEVELOPMENT_TEAM = S2FQHRJG5N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We'd like to use your location to save where photos were taken.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +292,7 @@
 				DEVELOPMENT_TEAM = S2FQHRJG5N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We'd like to use your location to save where photos were taken.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

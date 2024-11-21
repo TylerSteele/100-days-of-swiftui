@@ -13,7 +13,7 @@ struct PersonListView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text("\(person.firstName) \(person.lastName)")
+                Text(person.fullName)
                     .font(.headline)
                 Text(person.company)
                     .font(.subheadline)
@@ -22,6 +22,7 @@ struct PersonListView: View {
             if person.uiImage != nil {
                 Image(uiImage: person.uiImage!)
                     .resizable()
+                    .scaledToFit()
                     .frame(width: 60, height: 60)
                     .clipShape(.rect(cornerRadius: 10))
                     .padding()

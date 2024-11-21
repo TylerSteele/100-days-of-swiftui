@@ -27,9 +27,19 @@ class Person: Comparable, Hashable, Identifiable {
     var email: String
     var phoneNumber: String
     @Attribute(.externalStorage) var photo: Data?
+    var latitude: Double?
+    var longitude: Double?
+    
+    var fullName: String {
+        "\(firstName) \(lastName)"
+    }
     
     var uiImage: UIImage? {
         photo != nil ? UIImage(data: photo!) : nil
+    }
+    
+    var coordinates: CLLocationCoordinate2D? {
+        latitude != nil && longitude != nil ? CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!) : nil
     }
     
     static func <(lhs: Person, rhs: Person) -> Bool {
@@ -38,7 +48,7 @@ class Person: Comparable, Hashable, Identifiable {
         lhs.lastName < rhs.lastName
     }
     
-    init(id: UUID = UUID(), firstName: String, lastName: String, company: String, email: String, phoneNumber: String, photo: Data? = nil) {
+    init(id: UUID = UUID(), firstName: String, lastName: String, company: String, email: String, phoneNumber: String, photo: Data? = nil, location: CLLocationCoordinate2D? = nil) {
         self.id = id
         self.firstName = firstName
         self.lastName = lastName
@@ -46,8 +56,12 @@ class Person: Comparable, Hashable, Identifiable {
         self.email = email
         self.phoneNumber = phoneNumber
         self.photo = photo
+        if location != nil {
+            self.latitude = location?.latitude
+            self.longitude = location?.longitude
+        }
     }
 #if DEBUG
-    static let example = Person(firstName: "Tyler", lastName: "Steele", company: "NonyaBusinessInc", email: "nope@nomail.com", phoneNumber: "12345678")
+    static let example = Person(firstName: "Tyler", lastName: "Steele", company: "NonyaBusinessInc", email: "nope@nomail.com", phoneNumber: "12345678", location: CLLocationCoordinate2D(latitude: 48, longitude: 58))
 #endif
 }

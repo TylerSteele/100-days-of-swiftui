@@ -5,6 +5,7 @@
 //  Created by Tyler Steele on 11/20/24.
 //
 
+import MapKit
 import SwiftUI
 
 struct PersonDetailView: View {
@@ -20,9 +21,25 @@ struct PersonDetailView: View {
                     .clipShape(.rect(cornerRadius: 10))
                     .padding()
             }
+            if person.coordinates != nil {
+                let mapPosition = MapCameraPosition.region(MKCoordinateRegion(center: person.coordinates!, span: MKCoordinateSpan(latitudeDelta: 5, longitudeDelta: 5)))
+                MapReader { proxy in
+                    Map(initialPosition: mapPosition) {
+                        Annotation(person.fullName, coordinate: person.coordinates!) {
+                            Image(systemName: "mappin")
+                                .foregroundStyle(.red)
+                                .frame(width: 44, height: 44)
+                                .background(.white.opacity(0.5))
+                                .clipShape(.circle)
+                        }
+                    }
+                    .mapStyle(.imagery)
+                    .padding()
+                }
+            }
             List{
                 Section("Name") {
-                    Text("\(person.firstName) \(person.lastName)")
+                    Text(person.fullName)
                 }
                 Section("Company") {
                     Text(person.company)
@@ -36,7 +53,7 @@ struct PersonDetailView: View {
             }
             .padding()
         }
-        .navigationTitle("\(person.firstName) \(person.lastName)")
+        .navigationTitle(person.fullName)
     }
 }
 
