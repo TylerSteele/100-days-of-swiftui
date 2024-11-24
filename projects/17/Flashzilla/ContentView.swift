@@ -77,8 +77,6 @@ struct ContentView: View {
                         .clipShape(.capsule)
                 }
                 ZStack {
-                    // ForEach(Array(cards.enumerated()), id: \.element.id) { index, card in
-                    // ForEach(0..<cards.count, id: \.self) { index in
                     ForEach(cards) { card in
                         CardView(card: card) {
                             withAnimation {
@@ -92,14 +90,8 @@ struct ContentView: View {
                         .stacked(id: card.id, cards: cards)
                         .allowsHitTesting(cards.firstIndex(of: card) == cards.count - 1)
                         .accessibilityHidden((cards.firstIndex(of: card) ?? -1) < (cards.count - 1))
-                        // .stacked(at: index, in: cards.count)
-                        // .allowsHitTesting(index == cards.count - 1)
-                        // .accessibilityHidden(index < cards.count - 1)
                         
                     }
-                    // TODO This is the only way I can get Challenge 3 "working", but it breaks all animations.
-                    // Question posted here: https://www.hackingwithswift.com/forums/100-days-of-swiftui/project-17-challenge-3-cardview-is-not-shown-when-removing-and-inserting-a-card-into-the-cards-array/28337/28476
-                    .id(UUID())
                 }
                 .allowsHitTesting(timeRemaining > 0)
                 
@@ -182,16 +174,13 @@ struct ContentView: View {
     }
     
     func shiftCardToFront(id idToShift: UUID) {
-        if let index = cards.firstIndex(where: {$0.id == idToShift}) {
-            let card = cards.remove(at: index)
-            cards.insert(card, at: 0)
-        }
+        guard let index = cards.firstIndex(where: {$0.id == idToShift}) else { return }
+        var card = cards.remove(at: index)
+        // Change UUID to force rerender of ForEach
+        // Credit to mrnumbers at https://www.hackingwithswift.com/forums/100-days-of-swiftui/project-17-challenge-3-cardview-is-not-shown-when-removing-and-inserting-a-card-into-the-cards-array/28337/28476
+        card.id = UUID()
+        cards.insert(card, at: 0)
     }
-    
-    //    func removeCard(at index: Int) {
-    //        guard index >= 0 else { return }
-    //        cards.remove(at: index)
-    //    }
     
     func removeCard(id idToDelete: UUID) {
         if let index = cards.firstIndex(where: {$0.id == idToDelete}) {
