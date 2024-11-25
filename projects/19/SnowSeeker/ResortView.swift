@@ -11,19 +11,26 @@ struct ResortView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
     @Environment(Favorites.self) var favorites
-
+    
     @State private var selectedFacility: Facility?
     @State private var showingFacility = false
-
+    
     let resort: Resort
-
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
-                Image(decorative: resort.id)
-                    .resizable()
-                    .scaledToFit()
-
+                ZStack(alignment: .bottomTrailing) {
+                    Image(decorative: resort.id)
+                        .resizable()
+                        .scaledToFit()
+                    Text("Credit: \(resort.imageCredit)")
+                        .padding(8)
+                        .background(.gray.opacity(0.7))
+                        .foregroundStyle(.white)
+                        .font(.caption)
+                        .accessibilityHidden(true)
+                }
                 HStack {
                     if horizontalSizeClass == .compact && dynamicTypeSize > .large {
                         VStack(spacing: 10) { ResortDetailsView(resort: resort) }
@@ -36,14 +43,14 @@ struct ResortView: View {
                 .padding(.vertical)
                 .background(.primary.opacity(0.1))
                 .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
-
+                
                 Group {
                     Text(resort.description)
                         .padding(.vertical)
-
+                    
                     Text("Facilities")
                         .font(.headline)
-
+                    
                     HStack {
                         ForEach(resort.facilityTypes) { facility in
                             Button {
@@ -58,7 +65,7 @@ struct ResortView: View {
                     .padding(.vertical)
                 }
                 .padding(.horizontal)
-
+                
                 Button(favorites.contains(resort) ? "Remove from Favorites" : "Add to Favorites") {
                     if favorites.contains(resort) {
                         favorites.remove(resort)
@@ -80,6 +87,8 @@ struct ResortView: View {
 }
 
 #Preview {
+    let favorites = Favorites()
     ResortView(resort: .example)
+        .environment(favorites)
 }
 
