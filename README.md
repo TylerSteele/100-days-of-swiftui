@@ -24,6 +24,6 @@ I started this journey on July 2nd, 2024, and after 145 days I've completed achi
 
 I'd like to thank Paul Hudson for his gift of free, high quality education. I have progressed further and faster than I would have with self-guided learning. In fact, I would have grown discouraged and distracted by the next shiny object a long time ago without this structure and path in place. And yes, 145 days is 45 more days than 100. But I still learned 100% of the material on my time and, most importantly, I stuck with it even after I slipped up. Persistence over perfection, every time.
 
-Look out, App Store, I'm coming.
+Look out, App Store, I'm coming. Oh, and look out, pies, too! :fork_and_knife:
 
 <img width="1199" alt="image" src="https://github.com/user-attachments/assets/f481f41c-d7a1-4a4d-b5a7-fed1c076ad5f">
